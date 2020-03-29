@@ -1,6 +1,8 @@
 #!/bin/bash
 #set -x errexit
 
+# SynoVideoGPS Version 0.1.2
+
 mypass="$1"		# provide user password as first parameter to the script
 dir="."			# script should be run from /volumeX/photo/ to scan the entire tree (it is not relevant where on the volume the script is located)
 myuser=$USER		# always use WebAPI as currently logged in user
@@ -25,20 +27,19 @@ done
 
 #Scan through subdirectories
 counter=0
-total=$( find "$dir" -print | wc -l )
-echo $total
+total=$( find "$dir" -print | grep -v "@eaDir" | wc -l )
 
 find "$dir" -print0 | while IFS= read -r -d '' current_path
 do
-
-	#Prepare progress info
-	((counter=counter+1))
-	((progress=(counter*100/total)))
 
 	#Do nothing for Thumbnails etc.
 	if [[ $current_path = *"eaDir"* ]]; then
 		continue    	
 	fi
+
+	#Prepare progress info
+	((counter=counter+1))
+	((progress=(counter*100/total)))
 
 	#For all non-directories we can continue depending on file type
 	echo -e "[${progress}%]\tScanning $current_path"
