@@ -10,3 +10,6 @@ HowTo:
 
 Tips:
 - Install ffmpeg version from Community Repository to enable better Metadata recognition
+
+Credits:
+Thanks to flingo64 for his support and his PhotoStation-Upload-Lr-Plugin for inspiration
