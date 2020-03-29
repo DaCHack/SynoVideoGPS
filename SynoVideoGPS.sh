@@ -90,7 +90,7 @@ do
 	video_id=$( echo "video_${album_SubID}_${video_SubID}")
 
 	#Save Location to video
-	url="http://${ds_ip}/photo/webapi/photo.php?api=SYNO.PhotoStation.Photo&method=edit&version=1&id=${video_id}&gps_latXXX=${GPS_latitude}&gps_lng=${GPS_longitude}"
+	url="http://${ds_ip}/photo/webapi/photo.php?api=SYNO.PhotoStation.Photo&method=edit&version=1&id=${video_id}&gps_lat=${GPS_latitude}&gps_lng=${GPS_longitude}"
 
 	edit_result_token=$(curl -b cookies.txt ${url} 2>&1)
 
