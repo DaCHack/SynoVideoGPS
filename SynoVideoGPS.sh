@@ -1,7 +1,7 @@
 #!/bin/bash
 #set -x errexit
 
-# SynoVideoGPS Version 0.1.2
+# SynoVideoGPS Version 0.1.3
 
 mypass="$1"		# provide user password as first parameter to the script
 dir="."			# script should be run from /volumeX/photo/ to scan the entire tree (it is not relevant where on the volume the script is located)
@@ -17,24 +17,21 @@ fi
 echo "Login successful. Cookie created..."
 
 #Check if community version of ffmpeg installed
-ffmpeg_tool="ffmpeg"
-for disk in {1..8}; do
-	if test -f "/volume${disk}/@appstore/ffmpeg/bin/ffmpeg"; then
-		ffmpeg_tool="/volume${disk}/@appstore/ffmpeg/bin/ffmpeg"
-	fi
-done
-
+ffmpeg_tool=$( ls -d /volume?/@appstore/ffmpeg/bin/ffmpeg | head -1 )
+if [[ "$ffmpeg_tool" == "" ]];  then
+	ffmpeg_tool=/bin/ffmpeg
+fi
 
 #Scan through subdirectories
 counter=0
-total=$( find "$dir" -print | grep -v "@eaDir" | wc -l )
+total=$( find "$dir" -print | grep -v "eaDir" | wc -l )
 
 find "$dir" -print0 | while IFS= read -r -d '' current_path
 do
 
 	#Do nothing for Thumbnails etc.
 	if [[ $current_path = *"eaDir"* ]]; then
-		continue    	
+		continue
 	fi
 
 	#Prepare progress info
@@ -61,6 +58,10 @@ do
 	GPS_latitude=$( echo $geo_data | awk -F"+|-" '{print substr($0,index($0,$2-1),1) $2}' )
 	GPS_longitude=$( echo $geo_data | awk -F"+|-" '{print substr($0,index($0,$3-1),1) $3}' )
 
+	#Remove leading zeros in coordinates (though it would be relevant for Apple tags but obviously it is not needed. keeping it for a while)
+	#GPS_latitude=$( echo $GPS_latitude | sed -E 's/([+-])0+/\1/g' )
+	#GPS_longitude=$( echo $GPS_longitude | sed -E 's/([+-])0+/\1/g' )
+
 	# URLencode GPS data
 	GPS_latitude=$( echo "$GPS_latitude" | sed 's/+/%2B/g' | sed 's/-/%2D/g' | sed 's/\./%2E/g' )
 	GPS_longitude=$( echo "$GPS_longitude" | sed 's/+/%2B/g' | sed 's/-/%2D/g' | sed 's/\./%2E/g' )
@@ -79,21 +80,21 @@ do
 	echo -n " ${GPS_longitude} "
 
 	#Get video path (relative to /photo/) -> cut "/volumeX/photo/"
-	video_path=$(dirname "${current_path}" | cut -d'/' -f 4- )
-	#echo $video_path
+	absolute_path=$(realpath "${current_path}")
+	video_path=$(dirname "${absolute_path}" | cut -d'/' -f 4- )
 
 	#Build video ID
 	#video_<AlbumPathInHex>_<PhotoPathInHex>
-	album_SubID=$(echo -n "${video_path}/" | od -An -t x1 | tr -d '\n ')
+	album_SubID=$(echo -n "${video_path}" | od -An -t x1 | tr -d '\n ')
 	video_SubID=$(echo -n "$file" | od -An -t x1 | tr -d '\n ')
 	video_id=$( echo "video_${album_SubID}_${video_SubID}")
 
 	#Save Location to video
-	url="http://${ds_ip}/photo/webapi/photo.php?api=SYNO.PhotoStation.Photo&method=edit&version=1&id=${video_id}&gps_lat=${GPS_latitude}&gps_lng=${GPS_longitude}"
+	url="http://${ds_ip}/photo/webapi/photo.php?api=SYNO.PhotoStation.Photo&method=edit&version=1&id=${video_id}&gps_latXXX=${GPS_latitude}&gps_lng=${GPS_longitude}"
 
-	edit_result_token=$( curl -b cookies.txt "$url" 2>&1)
+	edit_result_token=$(curl -b cookies.txt ${url} 2>&1)
 
-	if [[ ${edit_result_token} != *"true"* ]]; then
+	if [[ $edit_result_token == *"error"* ]]; then
 		echo "Error: Could not save GPS data"
 		exit 1
 	fi
