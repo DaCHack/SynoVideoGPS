@@ -1,6 +1,11 @@
 SynoVideoGPS
 ======================
 
+Version 0.1.3
+-------------
+- Optimized ffmpeg version check
+- Fixed identification of absolute path for album ID
+
 Version 0.1.2
 -------------
 - Minor fixes
