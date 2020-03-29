@@ -1,12 +1,17 @@
 SynoVideoGPS
 ======================
 
+Version 0.1.2
+-------------
+- Minor fixes
+- Added version number to code
+
 Version 0.1.1
 -------------
 - Use community repository ffmpeg if available, fallback on built-in version if not
-- fix progress counter
-- remove ffmetadata parameter
-- clean-up cookie file after scan
+- Fix progress counter
+- Remove ffmetadata parameter
+- Clean-up cookie file after scan
 
 Version 0.1.0
 -------------
