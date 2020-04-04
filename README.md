@@ -3,7 +3,7 @@ Brings Videos with GPS metadata to the Photo Station Map View
 
 Tested on DS216play with DSM 6.2.2-24922 Update 4
 
-How to bring GPS information included in metadata into the PhotoStation database
+How to bring GPS metadata into the PhotoStation database
 -------------
 - Place script in convenient location on one of your Synology Diskstation Volumes
 - Run the script from a directory that you want to scan
