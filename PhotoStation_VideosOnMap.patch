@@ -1,0 +1,96 @@
+diff -cr Original/include/file.php Patched/include/file.php
+*** Original/include/file.php	2019-05-30 05:57:54.000000000 +0200
+--- Patched/include/file.php	2020-04-04 14:50:35.000000000 +0200
+***************
+*** 369,375 ****
+  		return $params;
+  	}
+  
+! 	public static function ListGPSGroup ($sharename, $labels, $bounds, $zoom = 5, $hasPhoto = true, $hasVideo = false)
+  	{
+  		// init variables
+  		$items = array('total' => 0, 'items' => array());
+--- 369,375 ----
+  		return $params;
+  	}
+  
+! 	public static function ListGPSGroup ($sharename, $labels, $bounds, $zoom = 5, $hasPhoto = true, $hasVideo = true)
+  	{
+  		// init variables
+  		$items = array('total' => 0, 'items' => array());
+***************
+*** 391,404 ****
+  		}
+  
+  		// TODO: array('*') means get all fields of photo_image
+! 		// if hasVideo = true, this query will be crashed
+  
+  		$query_params = self::GetQueryByConditions($hasPhoto, $hasVideo, array(
+  			'sharename'	 => $sharename,
+  			'labels'	 => $labels,
+  			'gps'		 => true,
+  			'bounds'	 => $simpleBounds
+! 		), array('*'));
+  
+  		if (false === $query_params) {
+  			goto End;
+--- 391,405 ----
+  		}
+  
+  		// TODO: array('*') means get all fields of photo_image
+! 		// if hasVideo = true, this query will be crashed --> corrected by flingo64 and DaCapitalist
+  
+  		$query_params = self::GetQueryByConditions($hasPhoto, $hasVideo, array(
+  			'sharename'	 => $sharename,
+  			'labels'	 => $labels,
+  			'gps'		 => true,
+  			'bounds'	 => $simpleBounds
+! 		//), array('*'));
+! 		), array('id', 'disabled', 'gps', 'resolutionx', 'resolutiony', 'shareid', 'privilege_shareid', 'lat', 'lng'));
+  
+  		if (false === $query_params) {
+  			goto End;
+diff -cr Original/webapi/photo.php Patched/webapi/photo.php
+*** Original/webapi/photo.php	2019-05-30 05:57:54.000000000 +0200
+--- Patched/webapi/photo.php	2020-04-04 15:09:33.000000000 +0200
+***************
+*** 267,273 ****
+  		}
+  
+  		$hasPhoto = in_array('photo', $params['type']);
+! 		$hasVideo = in_array('video', $params['type']);
+  
+  		// create the variable which name is the same as the key of params
+  		foreach ($params as $k => $v) {
+--- 267,274 ----
+  		}
+  
+  		$hasPhoto = in_array('photo', $params['type']);
+! 		//$hasVideo = in_array('video', $params['type']);
+! 		$hasVideo = true;
+  
+  		// create the variable which name is the same as the key of params
+  		foreach ($params as $k => $v) {
+***************
+*** 919,928 ****
+  		}
+  
+  		if ("album" === $params['listType']) {
+! 			$itemObjs = File::ListGPSGroup($params['sharename'], array(), $params['bounds'], $params['zoom'], in_array('photo', $params['type']), false);
+  
+  		} else if ("label" === $params["listType"]) {
+! 			$itemObjs = File::ListGPSGroup('/', $params['labelIds'], $params['bounds'], $params['zoom'], in_array('photo', $params['type']), false);
+  
+  		} else if ("smart" === $params["listType"]) {
+  			$itemObjs = SmartAlbum::GetSmartAlbumInstance()->ListGPSGroup($params['smart'], $params['bounds'], $params['zoom']);
+--- 920,929 ----
+  		}
+  
+  		if ("album" === $params['listType']) {
+! 			$itemObjs = File::ListGPSGroup($params['sharename'], array(), $params['bounds'], $params['zoom'], in_array('photo', $params['type']), true);
+  
+  		} else if ("label" === $params["listType"]) {
+! 			$itemObjs = File::ListGPSGroup('/', $params['labelIds'], $params['bounds'], $params['zoom'], in_array('photo', $params['type']), true);
+  
+  		} else if ("smart" === $params["listType"]) {
+  			$itemObjs = SmartAlbum::GetSmartAlbumInstance()->ListGPSGroup($params['smart'], $params['bounds'], $params['zoom']);
