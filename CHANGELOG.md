@@ -1,6 +1,11 @@
 SynoVideoGPS
 ======================
 
+Version 0.1.4
+-------------
+- Account upper/lowercase file extensions
+- Minor clean-ups of code
+
 Version 0.1.3
 -------------
 - Optimized ffmpeg version check
