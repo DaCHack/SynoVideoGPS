@@ -1,7 +1,7 @@
 #!/bin/bash
 #set -x errexit
 
-# SynoVideoGPS Version 0.1.3
+# SynoVideoGPS Version 0.1.4
 
 mypass="$1"		# provide user password as first parameter to the script
 dir="."			# script should be run from /volumeX/photo/ to scan the entire tree (it is not relevant where on the volume the script is located)
@@ -17,14 +17,14 @@ fi
 echo "Login successful. Cookie created..."
 
 #Check if community version of ffmpeg installed
-ffmpeg_tool=$( ls -d /volume?/@appstore/ffmpeg/bin/ffmpeg | head -1 )
+ffmpeg_tool=$( ls /volume?/@appstore/ffmpeg/bin/ffmpeg | head -1 )
 if [[ "$ffmpeg_tool" == "" ]];  then
 	ffmpeg_tool=/bin/ffmpeg
 fi
 
 #Scan through subdirectories
 counter=0
-total=$( find "$dir" -print | grep -v "eaDir" | wc -l )
+total=$( find "$dir" -type f -print | grep -v "eaDir" | wc -l )
 
 find "$dir" -print0 | while IFS= read -r -d '' current_path
 do
@@ -38,22 +38,23 @@ do
 	((counter=counter+1))
 	((progress=(counter*100/total)))
 
-	#For all non-directories we can continue depending on file type
+	#Continue depending on file type
 	echo -e "[${progress}%]\tScanning $current_path"
 	file=$(basename -- "$current_path")
+	file_extension=$( echo "${file##*.}" | awk '{print tolower($0)}' )
 
 	#Check MOV files from iPhones
-	if  [ "${file##*.}" = "MOV" ]; then
+	if  [ "${file_extension}" = "mov" ]; then
 		geo_data=$( ${ffmpeg_tool} -i "${current_path}" -f ffmetadata 2>&1 | awk '/com.apple.quicktime.location.ISO6709/{print substr($2,1,length($2)-1)}' )
 	
 	#Check MP4 files from GoPro
-	elif  [ "${file##*.}" = "MP4" ]; then
+	elif  [ "${file_extension}" = "mp4" ]; then
 		geo_data=$( ${ffmpeg_tool} -i "${current_path}" -f ffmetadata 2>&1 | awk '/location /{print substr($3,1,length($3)-1)}' )
 	else
 		#Skip all other file types
 		continue
 	fi
-	
+
 	# Extract GPS data from ffmpeg output
 	GPS_latitude=$( echo $geo_data | awk -F"+|-" '{print substr($0,index($0,$2-1),1) $2}' )
 	GPS_longitude=$( echo $geo_data | awk -F"+|-" '{print substr($0,index($0,$3-1),1) $3}' )
