@@ -14,7 +14,7 @@ How to show videos with GPS data on map
 You need to patch some files of the PhotoStation API in order to show videos on the map.
 The included patch fixes videos not being shown on the web interface as well as the DS Photo App.
 Unfortunately, Synology has no patch binary to apply it. Instead you need to apply it locally and upload the adapted files:
-- `/volumeX/@appstore/PhotoStation/photo/webapi/file.php` 
+- `/volumeN/@appstore/PhotoStation/photo/webapi/file.php` 
 - `/volumeN/@appstore/PhotoStation/photo/include/file.php`
 
 Tips
