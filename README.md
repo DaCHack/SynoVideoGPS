@@ -13,8 +13,8 @@ How to show videos with GPS data on map
 -------------
 You need to patch some files of the PhotoStation API in order to show videos on the map.
 The included patch fixes videos not being shown on the web interface as well as the DS Photo App.
-- Copy the patch file to /volumeX/@appstore/PhotoStation/photo/ and issue this command:
-`patch -p0 < PhotoStation_VideosOnMap.patch`
+- Copy the patch file to `/volumeX/@appstore/PhotoStation/photo/` 
+- Apply patch: `patch -p0 < PhotoStation_VideosOnMap.patch`
 
 Tips
 -------------
