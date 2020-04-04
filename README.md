@@ -20,7 +20,7 @@ Unfortunately, Synology has no patch binary to apply it. Instead you need to app
 Tips
 -------------
 - Install ffmpeg version from Community Repository to enable better Metadata recognition
-- After the script completed PhotoStation continues to index the new metadata. Please wait for the `postgres` process to complete before the data will be visible in PhotoStation. As long as the indexing continues you will find the progress on top of the list with significant CPU usage when you enter the command `top`
+- After the script completed PhotoStation continues to index the new metadata. Please wait for the `postgres` and `synoindexplugind` processes to complete before the data will be visible in PhotoStation. As long as the indexing continues you will find the progresses on top of the list with significant CPU usage when you enter the command `top`
 
 Credits
 -------------
