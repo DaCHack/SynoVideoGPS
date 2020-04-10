@@ -1,6 +1,12 @@
 SynoVideoGPS
 ======================
 
+Version 0.1.5
+-------------
+- Take directory as 2nd parameter to be able to use the script via the DSM task scheduler
+- Included a 1sec sleep after API call to give the indexing deamon some time to react (should improve indexing quality)
+- Minor clean-ups of code
+
 Version 0.1.4
 -------------
 - Account upper/lowercase file extensions
