@@ -11,7 +11,7 @@ How to bring GPS metadata into the PhotoStation database
 PhotoStation does not scan videos for GPS metadata. Thus, you need to run a manual scan and provide PhotoStation with the results via an API call. The SynoVideoGPS script does that job for you.
 - Place script in convenient location on one of your Synology Diskstation Volumes
 - Run the script from a directory that you want to scan
-- Run the script: `sh SynoVideoGPS.sh [YourDSMUserPassword]`
+- Run the script: `sh SynoVideoGPS.sh [YourDSMUserPassword] [AbsolutePathToAlbumToBeScanned]`
 
 How to show videos with GPS data on map
 -------------
