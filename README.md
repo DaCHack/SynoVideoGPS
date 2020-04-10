@@ -4,6 +4,7 @@ Brings Videos with GPS metadata to the Photo Station Map View
 Tested on DS216play with DSM 6.2.2-24922 Update 4
 
 This is my first repository on Github so please excuse any misbehaviours that may certainly not be intentionally.
+
 Also I only want to share my insights and cannot take responsibility for any harms to your data or devices.
 
 How to bring GPS metadata into the PhotoStation database
