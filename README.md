@@ -3,8 +3,12 @@ Brings Videos with GPS metadata to the Photo Station Map View
 
 Tested on DS216play with DSM 6.2.2-24922 Update 4
 
+This is my first repository on Github so please excuse any misbehaviours that may certainly not be intentionally.
+Also I only want to share my insights and cannot take responsibility for any harms to your data or devices.
+
 How to bring GPS metadata into the PhotoStation database
 -------------
+PhotoStation does not scan videos for GPS metadata. Thus, you need to run a manual scan and provide PhotoStation with the results via an API call. The SynoVideoGPS script does that job for you.
 - Place script in convenient location on one of your Synology Diskstation Volumes
 - Run the script from a directory that you want to scan
 - Run the script: `sh SynoVideoGPS.sh [YourDSMUserPassword]`
