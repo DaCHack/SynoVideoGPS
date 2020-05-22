@@ -111,7 +111,7 @@ do
 
 				#Extract metadata stream to a temp file
 				tabulator=$(echo -e "\t")
-    		output_metadata_creation=$( ${ffmpeg_tool} -y -i ${current_path} -codec copy -map 0:m:handler_name:"${tabulator}GoPro MET" -f rawvideo $gpsDataBinFn 2>&1 )
+    		output_metadata_creation=$( ${ffmpeg_tool} -y -i "${current_path}" -codec copy -map 0:m:handler_name:"${tabulator}GoPro MET" -f rawvideo $gpsDataBinFn 2>&1 )
 
 				#Get JSON from metadata stream
 				output_JSON_creation=$( "${gopro2json}" -i $gpsDataBinFn -o $gpsDataJsonFn 2>&1 )
