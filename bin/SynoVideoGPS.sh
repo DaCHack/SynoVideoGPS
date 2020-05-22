@@ -3,15 +3,15 @@
 
 # SynoVideoGPS Version 0.2.0
 
-ds_ip="localhost"											# change to IP adress if localhost does not work
-script_dir=$(dirname "$0")									# all relevant external data is in the script directory, we should know it
-cookiesFn="/tmp/cookies.txt"
-gpsDataBinFn="/tmp/gps-data.bin"
-gpsDataJsonFn="/tmp/gps-data.json"
-fileListFn="/tmp/filelist.txt"
+ds_ip="localhost"                         # change to IP adress if localhost does not work
+script_dir=$(dirname "$0")                # login credentials and gopro2json tool are in script directory
+cookiesFn="/tmp/syno-gps-cookies.txt"
+gpsDataBinFn="/tmp/syno-gps-data.bin"
+gpsDataJsonFn="/tmp/syno-gps-data.json"
+fileListFn="/tmp/syno-gps-filelist.txt"
 
 ps_basedir=$( ls -d /volume?/photo | head -1 )
-albumPath=$1														# provide absolute album path (relative to PhotoStation base directory) that should be scanned as first parameter (it is not relevant where on the volume the script is located)
+albumPath=$1                              # provide album path (relative to PhotoStation base directory) that should be scanned as first parameter
 dir="${ps_basedir}${albumPath}"
 
 
