@@ -64,17 +64,21 @@ do
 	#Prepare progress info and file type information
 	((counter=counter+1))
 	((progress=(counter*100/total)))
-	echo -e "[${progress}%]\tScanning $current_path"
+
 	file=$(basename -- "$current_path")
 	file_extension=$( echo "${file##*.}" | awk '{print tolower($0)}' )
 
   #Get ffmpeg scan results for supported file types
+  declare -A supported_types
   supported_types[mov]=1
   supported_types[mp4]=1
-  if [[ $supported_types[$file_extension] ]]; then
+
+  if [[ ${supported_types[$file_extension]} ]]; then
+    #Move this line out of the if-statement to get a progress output on each file scanned
+	  echo -e "[${progress}%]\tScanning $current_path"
     ffmpeg_data=$( ${ffmpeg_tool} -i "${current_path}" 2>&1 )
   else
-    echo "Unsupported file type"
+    #echo "Unsupported file type"
     continue
   fi
 
