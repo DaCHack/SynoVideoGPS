@@ -10,9 +10,9 @@ Also I only want to share my insights and cannot take responsibility for any har
 How to bring GPS metadata into the PhotoStation database
 -------------
 PhotoStation does not scan videos for GPS metadata. Thus, you need to run a manual scan and provide PhotoStation with the results via an API call. The SynoVideoGPS script does that job for you.
-- Place script in convenient location on one of your Synology Diskstation Volumes
-- Run the script from a directory that you want to scan
-- Run the script: `sh SynoVideoGPS.sh [YourDSMUserPassword] [AbsolutePathToAlbumToBeScanned]`
+- Place files in folder `bin` in `/usr/local/bin` of your Synology Diskstation
+- Run the script from the task scheduler as root with the command `/usr/local/bin/SynoVideoGPS.sh /ALBUM/YOU/WANT/TO/SCAN` (without trailing /volumeX/photo)
+The script can also be run directly from command line using any user that also has write permissions in PhotoStation. To do this, login in as the respective user and pass the user password as a second parameter
 
 How to show videos with GPS data on map
 -------------
@@ -26,7 +26,7 @@ Tips
 -------------
 - Install ffmpeg version from Community Repository to enable better Metadata recognition
 - [Enable GPMD support](https://github.com/DaCapitalist/SynoVideoGPS/wiki/Enable-GPMD-support) to find even more videos with GPS data (GoPro only)
-- After the script completed PhotoStation continues to index the new metadata. Please wait for the `postgres` and `synoindexplugind` processes to complete before the data will be visible in PhotoStation. As long as the indexing continues you will find the progresses on top of the list with significant CPU usage when you enter the command `top`
+- After the script completed PhotoStation continues to index the new metadata. Please wait for the `postgres` and `synoindexplugind` processes to complete before the data will be visible in PhotoStation. As long as the indexing continues you will find the processes on top of the list with significant CPU usage when you enter the command `top`
 
 Credits
 -------------
