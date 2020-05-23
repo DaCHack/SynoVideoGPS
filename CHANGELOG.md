@@ -1,6 +1,18 @@
 SynoVideoGPS
 ======================
 
+Version 0.2.1
+-------------
+- Fixed a bug where the script could fail if a GoPro Video was missing the metadata stream
+
+Version 0.2.0
+-------------
+- Included support for GoPro metadata stream scanning
+- Changed to absolute path logic to increase stability and reliability of outputs
+- Increased reliability in task scheduler environment
+- Introduced separate credential file for unattended script run
+- Several bug fixes
+
 Version 0.1.5
 -------------
 - Take directory as 2nd parameter to be able to use the script via the DSM task scheduler
