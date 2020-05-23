@@ -1,7 +1,7 @@
 #!/bin/bash
 #set -x errexit
 
-# SynoVideoGPS Version 0.2.0
+# SynoVideoGPS Version 0.2.1
 
 ds_ip="localhost"                         # change to IP adress if localhost does not work
 script_dir=$(dirname "$0")                # login credentials and gopro2json tool are in script directory
@@ -102,7 +102,8 @@ do
     else
       #Otherwise, check if we can find more data in the GoPro specific data stream
 			echo -n "No GPS in header. "
-      gopro_indicator=$( echo "$ffmpeg_data" | grep -c "GoPro" )
+      tabulator=$(echo -e "\t")
+      gopro_indicator=$( echo "$ffmpeg_data" | grep -c "${tabulator}GoPro MET" )
 
 			#If gopro2json is installed and we have a GoPro video, do an additional scan of GoPro metadata stream
 			if [ -f "${gopro2json}" ] && [ $gopro_indicator -gt 0 ]; then
@@ -110,7 +111,6 @@ do
 			  echo -n "Using gopro2json. "
 
 				#Extract metadata stream to a temp file
-				tabulator=$(echo -e "\t")
     		output_metadata_creation=$( ${ffmpeg_tool} -y -i "${current_path}" -codec copy -map 0:m:handler_name:"${tabulator}GoPro MET" -f rawvideo $gpsDataBinFn 2>&1 )
 
 				#Get JSON from metadata stream
