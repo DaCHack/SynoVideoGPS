@@ -1,7 +1,7 @@
 #!/bin/bash
 #set -x errexit
 
-# SynoVideoGPS Version 0.2.1
+# SynoVideoGPS Version 0.2.2
 
 ds_ip="localhost"                         # change to IP adress if localhost does not work
 script_dir=$(dirname "$0")                # login credentials and gopro2json tool are in script directory
@@ -159,9 +159,9 @@ do
 		continue
 	fi
 
-	# URLencode GPS data and remove "+" signs (try to fix iPhone not showing GPS data for videos)
-	GPS_latitude=$( echo "$GPS_latitude" | sed 's/+//g' | sed 's/-/%2D/g' | sed 's/\./%2E/g' )
-	GPS_longitude=$( echo "$GPS_longitude" | sed 's/+//g' | sed 's/-/%2D/g' | sed 's/\./%2E/g' )
+	# URLencode GPS data
+	GPS_latitude=$( echo "$GPS_latitude" | sed 's/+/%2B/g' | sed 's/-/%2D/g' | sed 's/\./%2E/g' )
+	GPS_longitude=$( echo "$GPS_longitude" | sed 's/+/%2B/g' | sed 's/-/%2D/g' | sed 's/\./%2E/g' )
 
 	#Skip if no GPS data found
 	if [[ ! "$GPS_latitude" =~ .*%2E.* ]]; then
