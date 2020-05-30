@@ -1,6 +1,10 @@
 SynoVideoGPS
 ======================
 
+Version 0.2.2
+-------------
+- Fixed a bug where coordinates might have inversed signs
+
 Version 0.2.1
 -------------
 - Fixed a bug where the script could fail if a GoPro Video was missing the metadata stream
