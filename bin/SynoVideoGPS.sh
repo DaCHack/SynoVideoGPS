@@ -87,8 +87,8 @@ do
 		geo_data=$( echo "$ffmpeg_data" | awk '/com.apple.quicktime.location.ISO6709/{print substr($2,1,length($2)-1)}' )
 
 		# Extract GPS data from ffmpeg output
-		GPS_latitude=$( echo $geo_data | awk -F"+|-" '{print substr($0,index($0,$2-1),1) $2}' )
-		GPS_longitude=$( echo $geo_data | awk -F"+|-" '{print substr($0,index($0,$3-1),1) $3}' )
+		GPS_latitude=$( echo $geo_data | awk -F"+|-" '{print substr($0,index($0,$2)-1,1) $2}' )
+		GPS_longitude=$( echo $geo_data | awk -F"+|-" '{print substr($0,index($0,$3)-1,1) $3}' )
 
 	#Check MP4 files from GoPro
 	elif  [ "$file_extension" = "mp4" ]; then
@@ -97,8 +97,8 @@ do
     # If GPS data was easy to extract via metadata save it for next steps
 		if [ ! "$geo_data" = "" ]; then
       # Extract GPS data from ffmpeg output
-      GPS_latitude=$( echo $geo_data | awk -F"+|-" '{print substr($0,index($0,$2-1),1) $2}' )
-      GPS_longitude=$( echo $geo_data | awk -F"+|-" '{print substr($0,index($0,$3-1),1) $3}' )
+      GPS_latitude=$( echo $geo_data | awk -F"+|-" '{print substr($0,index($0,$2)-1,1) $2}' )
+      GPS_longitude=$( echo $geo_data | awk -F"+|-" '{print substr($0,index($0,$3)-1,1) $3}' )
     else
       #Otherwise, check if we can find more data in the GoPro specific data stream
 			echo -n "No GPS in header. "
